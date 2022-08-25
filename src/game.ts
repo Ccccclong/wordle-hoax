@@ -2,6 +2,7 @@ import { getOccurences } from './utils';
 
 export class Game {
   private numRounds = 0;
+  private hasWon = false;
   private possibleWords: string[];
 
   constructor(private readonly words: string[]) {
@@ -14,7 +15,12 @@ export class Game {
       return 'Unknown word';
     }
     const bestMatch = this.computeBestMatch(word);
+    if (bestMatch === 'XXXXX') this.hasWon = true;
     return this.createResponse(bestMatch);
+  }
+
+  isCompleted(): boolean {
+    return this.numRounds >= 6 || this.hasWon;
   }
 
   private computeBestMatch(word: string): string {

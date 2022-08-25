@@ -45,4 +45,21 @@ describe(Game.name, () => {
       });
     });
   });
+
+  describe('#isCompleted', () => {
+    const cases = [
+      [['SLACK'], false],
+      [['HELLO', 'QUITE', 'FANCY'], false],
+      [['HELLO', 'QUITE', 'PANIC', 'EMAIL', 'CRAZY'], true],
+      [['HELLO', 'WORLD', 'FRESH', 'CRAZY', 'QUITE', 'FANCY'], true],
+    ] as [string[], boolean][];
+
+    describe.each(cases)('case %#', (inputs, expectedOutput) => {
+      it('returns whether the game is completed', () => {
+        for (const input of inputs) game.guess(input);
+        const output = game.isCompleted();
+        expect(output).toEqual(expectedOutput);
+      });
+    });
+  });
 });
