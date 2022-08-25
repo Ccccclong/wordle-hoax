@@ -20,10 +20,31 @@ describe(Game.name, () => {
 
   describe('#guess', () => {
     const cases = [
-      [['SLACK'], ['Unknown word']],
+      [
+        ['SLACK', '12345678', '@#$%^&', 'KKKKK', 'KKKKK', ''],
+        [
+          'Unknown word',
+          'Unknown word',
+          'Unknown word',
+          'Unknown word',
+          'Unknown word',
+          'Unknown word\nThe correct word is HELLO',
+        ],
+      ],
       [
         ['HELLO', 'QUITE', 'PANIC', 'EMAIL', 'CRAZY'],
         ['_____', '_____', '_?__?', 'Unknown word', 'XXXXX in 5 rounds'],
+      ],
+      [
+        ['HELLO', 'QUITE', 'PANIC', 'EMAIL', 'PANIC', 'CRAZY'],
+        [
+          '_____',
+          '_____',
+          '_?__?',
+          'Unknown word',
+          '_?__?',
+          'XXXXX in 6 rounds',
+        ],
       ],
       [
         ['HELLO', 'WORLD', 'FRESH', 'CRAZY', 'QUITE', 'FANCY'],
@@ -34,17 +55,6 @@ describe(Game.name, () => {
           '?_?__',
           '__?__',
           '_XX?_\nThe correct word is PANIC',
-        ],
-      ],
-      [
-        ['KKKKK', 'KKKKK', 'KKKKK', 'KKKKK', 'KKKKK', 'KKKKK'],
-        [
-          'Unknown word',
-          'Unknown word',
-          'Unknown word',
-          'Unknown word',
-          'Unknown word',
-          'Unknown word\nThe correct word is HELLO',
         ],
       ],
     ];
