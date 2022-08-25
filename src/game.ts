@@ -11,16 +11,31 @@ export class Game {
 
   guess(word: string): string {
     this.numRounds++;
-    if (!this.words.includes(word)) {
-      return 'Unknown word';
+    const response = this.processGuessWord(word);
+
+    if (this.isCompleted() && !this.hasWon) {
+      const correctWord = this.getCorrectWord();
+      const answerReveal = `The correct word is ${correctWord}`;
+      return `${response}\n${answerReveal}`;
     }
-    const bestMatch = this.computeBestMatch(word);
-    if (bestMatch === 'XXXXX') this.hasWon = true;
-    return this.createResponse(bestMatch);
+
+    return response;
   }
 
   isCompleted(): boolean {
     return this.numRounds >= 6 || this.hasWon;
+  }
+
+  private processGuessWord(word: string): string {
+    if (!this.words.includes(word)) {
+      return 'Unknown word';
+    }
+    const bestMatch = this.computeBestMatch(word);
+    if (bestMatch === 'XXXXX') {
+      this.hasWon = true;
+      return `${bestMatch} in ${this.numRounds} rounds`;
+    }
+    return bestMatch;
   }
 
   private computeBestMatch(word: string): string {
@@ -42,17 +57,6 @@ export class Game {
     return this.possibleWords.map((possibleWord) =>
       computeMatch(word, possibleWord)
     );
-  }
-
-  private createResponse(match: string): string {
-    if (match === 'XXXXX') {
-      return `${match} in ${this.numRounds} rounds`;
-    }
-    if (this.numRounds === 6) {
-      const correctWord = this.getCorrectWord();
-      return `${match}\nThe correct word is ${correctWord}`;
-    }
-    return match;
   }
 
   private getCorrectWord(): string {

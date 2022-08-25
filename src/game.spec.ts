@@ -36,6 +36,17 @@ describe(Game.name, () => {
           '_XX?_\nThe correct word is PANIC',
         ],
       ],
+      [
+        ['KKKKK', 'KKKKK', 'KKKKK', 'KKKKK', 'KKKKK', 'KKKKK'],
+        [
+          'Unknown word',
+          'Unknown word',
+          'Unknown word',
+          'Unknown word',
+          'Unknown word',
+          'Unknown word\nThe correct word is HELLO',
+        ],
+      ],
     ];
 
     describe.each(cases)('case %#', (inputs, expectedOutputs) => {
