@@ -2,9 +2,10 @@
 
 ## Running
 
-1. Create `words.txt` in the project root
-2. Run `npm install`
-3. Run `npm start`
+1. Make a copy of `words.mock.txt` and name it `words.txt`
+2. If needed, modify `words.txt`. Each line must contain one word only, and each word must be consisted of 5 capital letters.
+3. Run `npm install`
+4. Run `npm start`
 
 ## Testing
 
