@@ -19,68 +19,105 @@ describe(Game.name, () => {
   });
 
   describe('#guess', () => {
-    const cases = [
-      [
-        ['SLACK', '12345678', '@#$%^&', 'KKKKK', 'KKKKK', ''],
-        [
-          'Unknown word',
-          'Unknown word',
-          'Unknown word',
-          'Unknown word',
-          'Unknown word',
-          'Unknown word\nThe correct word is HELLO',
-        ],
-      ],
-      [
-        ['HELLO', 'QUITE', 'PANIC', 'EMAIL', 'CRAZY'],
-        ['_____', '_____', '_?__?', 'Unknown word', 'XXXXX in 5 rounds'],
-      ],
-      [
-        ['HELLO', 'QUITE', 'PANIC', 'EMAIL', 'PANIC', 'CRAZY'],
-        [
-          '_____',
-          '_____',
-          '_?__?',
-          'Unknown word',
-          '_?__?',
-          'XXXXX in 6 rounds',
-        ],
-      ],
-      [
-        ['HELLO', 'WORLD', 'FRESH', 'CRAZY', 'QUITE', 'FANCY'],
-        [
-          '_____',
-          '_____',
-          '_____',
-          '?_?__',
-          '__?__',
-          '_XX?_\nThe correct word is PANIC',
-        ],
-      ],
-    ];
-
-    describe.each(cases)('case %#', (inputs, expectedOutputs) => {
-      it('returns output strings', () => {
-        const outputs = inputs.map((input) => game.guess(input));
-        expect(outputs).toEqual(expectedOutputs);
+    const describeCase = (
+      name: string,
+      inputs: string[],
+      expectedOutputs: string[]
+    ) =>
+      describe(name, () => {
+        it('returns output strings', () => {
+          const outputs = inputs.map((input) => game.guess(input));
+          expect(outputs).toEqual(expectedOutputs);
+        });
       });
-    });
+
+    describeCase(
+      'when user input non-sense strings',
+      [
+        'SLACK',
+        '12345678',
+        '@#$%^&',
+        'FFFFFFFFFFFFFFFFFFFFFFFFFFFFHHFFFFFFFFcbashFF34236847FFFFFFFFFFFFFFFFFFFF4743F',
+        'KKKKK',
+        '',
+      ],
+      [
+        'Unknown word',
+        'Unknown word',
+        'Unknown word',
+        'Unknown word',
+        'Unknown word',
+        'Unknown word',
+      ]
+    );
+
+    describeCase(
+      'when user can guess the word',
+      ['HELLO', 'QUITE', 'PANIC', 'EMAIL', 'CRAZY'],
+      ['_____', '_____', '_?__?', 'Unknown word', 'XXXXX in 4 rounds']
+    );
+
+    describeCase(
+      'when user can guess the word in the last round',
+      ['HELLO', 'QUITE', 'KKKKK', 'PANIC', 'WORLD', 'FANCY', 'CRAZY'],
+      [
+        '_____',
+        '_____',
+        'Unknown word',
+        '_?__?',
+        '__?__',
+        '_?_?X',
+        'XXXXX in 6 rounds',
+      ]
+    );
+
+    describeCase(
+      'when user cannot guess the word',
+      ['HELLO', 'WORLD', 'FRESH', 'CRAZY', 'QUITE', 'FANCY'],
+      [
+        '_____',
+        '_____',
+        '_____',
+        '?_?__',
+        '__?__',
+        '_XX?_\nThe correct word is PANIC',
+      ]
+    );
   });
 
   describe('#isCompleted', () => {
-    const cases = [
-      [['SLACK'], false],
-      [['HELLO', 'QUITE', 'FANCY'], false],
-      [['HELLO', 'QUITE', 'PANIC', 'EMAIL', 'CRAZY'], true],
-      [['HELLO', 'WORLD', 'FRESH', 'CRAZY', 'QUITE', 'FANCY'], true],
-    ] as [string[], boolean][];
-
-    describe.each(cases)('case %#', (inputs, expectedOutput) => {
-      it('returns whether the game is completed', () => {
-        for (const input of inputs) game.guess(input);
-        const output = game.isCompleted();
-        expect(output).toEqual(expectedOutput);
+    const describeCase = (
+      name: string,
+      inputs: string[],
+      expectedOutput: boolean
+    ) => {
+      describe(name, () => {
+        it('returns whether the game is completed', () => {
+          for (const input of inputs) game.guess(input);
+          const output = game.isCompleted();
+          expect(output).toEqual(expectedOutput);
+        });
       });
-    });
+    };
+
+    describeCase('when the user inputs unknown words', ['SLACK'], false);
+
+    describeCase(
+      'when the user is still guessing',
+      ['HELLO', 'QUITE', 'FANCY'],
+      false
+    );
+
+    describeCase(
+      'when the user guessed the correct word',
+      ['HELLO', 'QUITE', 'PANIC', 'EMAIL', 'CRAZY'],
+      true
+    );
+
+    describeCase(
+      'when the user cannot guess in 6 rounds',
+      ['HELLO', 'WORLD', 'FRESH', 'CRAZY', 'QUITE', 'FANCY'],
+      true
+    );
   });
 });

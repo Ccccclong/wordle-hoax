@@ -10,6 +10,10 @@ export class Game {
   }
 
   guess(word: string): string {
+    if (!this.words.includes(word)) {
+      return 'Unknown word';
+    }
+
     this.numRounds++;
     const response = this.processGuessWord(word);
 
@@ -27,9 +31,6 @@ export class Game {
   }
 
   private processGuessWord(word: string): string {
-    if (!this.words.includes(word)) {
-      return 'Unknown word';
-    }
     const bestMatch = this.computeBestMatch(word);
     if (bestMatch === 'XXXXX') {
       this.hasWon = true;
