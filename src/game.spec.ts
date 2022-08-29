@@ -6,16 +6,16 @@ describe(Game.name, () => {
 
   beforeEach(() => {
     words = [
-      'HELLO',
+      'Hello',
       'WORLD',
       'QUITE',
       'FANCY',
-      'FRESH',
+      'Fresh',
       'PANIC',
-      'CRAZY',
+      'Crazy',
       'BUGGY',
       'HHLLL',
-      'LLHLH',
+      'Llhlh',
       'HLHLH',
     ];
     game = new Game(words);
@@ -56,13 +56,13 @@ describe(Game.name, () => {
 
     describeCase(
       'when user can guess the word',
-      ['HELLO', 'QUITE', 'PANIC', 'EMAIL', 'CRAZY'],
+      ['HELLO', 'Quite', 'PANIC', 'EMAIL', 'CRAZY'],
       ['_____', '_____', '_?__?', 'Unknown word', 'XXXXX in 4 rounds']
     );
 
     describeCase(
       'when user can guess the word in the last round',
-      ['HELLO', 'QUITE', 'KKKKK', 'PANIC', 'WORLD', 'FANCY', 'CRAZY'],
+      ['HELLO', 'QUITE', 'KKKKK', 'Panic', 'WORLD', 'FANCY', 'CRAZY'],
       [
         '_____',
         '_____',
@@ -76,7 +76,7 @@ describe(Game.name, () => {
 
     describeCase(
       'when user cannot guess the word',
-      ['HELLO', 'WORLD', 'FRESH', 'CRAZY', 'QUITE', 'FANCY'],
+      ['HELLO', 'World', 'FRESH', 'CRAZY', 'QUITE', 'FANCY'],
       [
         '_____',
         '_____',
@@ -89,13 +89,13 @@ describe(Game.name, () => {
 
     describeCase(
       'when user input word with repeating characters - case 1',
-      ['FANCY', 'PANIC', 'WORLD', 'HHLLL', 'HELLO', 'LLHLH'],
+      ['FANCY', 'PANIC', 'WORLD', 'HHLLL', 'heLLo', 'LLHLH'],
       ['_____', '_____', '___X_', '???X?', '?_?X_', 'XXXXX in 6 rounds']
     );
 
     describeCase(
       'when user input word with repeating characters - case 2',
-      ['HELLO', 'FRESH', 'PANIC', 'BUGGY'],
+      ['HELLO', 'FRESH', 'PANIC', 'bUGgY'],
       ['_____', '_____', '_____', 'XXXXX in 4 rounds']
     );
   });
@@ -119,13 +119,13 @@ describe(Game.name, () => {
 
     describeCase(
       'when the user is still guessing',
-      ['HELLO', 'QUITE', 'FANCY'],
+      ['HELLO', 'qUIte', 'FANCY'],
       false
     );
 
     describeCase(
       'when the user guessed the correct word',
-      ['HELLO', 'QUITE', 'PANIC', 'EMAIL', 'CRAZY'],
+      ['HELLO', 'QUITE', 'PaNic', 'EMAIL', 'CRAZY'],
       true
     );
 

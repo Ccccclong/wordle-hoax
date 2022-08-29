@@ -3,19 +3,22 @@ import { getOccurences } from './utils';
 export class Game {
   private numRounds = 0;
   private hasWon = false;
+  private readonly words: string[];
   private possibleWords: string[];
 
-  constructor(private readonly words: string[]) {
-    this.possibleWords = words;
+  constructor(words: string[]) {
+    this.words = words.map((word) => word.toUpperCase());
+    this.possibleWords = this.words;
   }
 
   guess(word: string): string {
-    if (!this.words.includes(word)) {
+    const uppercaseWord = word.toUpperCase();
+    if (!this.words.includes(uppercaseWord)) {
       return 'Unknown word';
     }
 
     this.numRounds++;
-    const response = this.processGuessWord(word);
+    const response = this.processGuessWord(uppercaseWord);
 
     if (this.isCompleted() && !this.hasWon) {
       const correctWord = this.getCorrectWord();
