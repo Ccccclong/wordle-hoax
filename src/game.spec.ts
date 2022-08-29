@@ -14,6 +14,9 @@ describe(Game.name, () => {
       'PANIC',
       'CRAZY',
       'BUGGY',
+      'HHLLL',
+      'LLHLH',
+      'HLHLH',
     ];
     game = new Game(words);
   });
@@ -82,6 +85,18 @@ describe(Game.name, () => {
         '__?__',
         '_XX?_\nThe correct word is PANIC',
       ]
+    );
+
+    describeCase(
+      'when user input word with repeating characters - case 1',
+      ['FANCY', 'PANIC', 'WORLD', 'HHLLL', 'HELLO', 'LLHLH'],
+      ['_____', '_____', '___X_', '???X?', '?_?X_', 'XXXXX in 6 rounds']
+    );
+
+    describeCase(
+      'when user input word with repeating characters - case 2',
+      ['HELLO', 'FRESH', 'PANIC', 'BUGGY'],
+      ['_____', '_____', '_____', 'XXXXX in 4 rounds']
     );
   });
 

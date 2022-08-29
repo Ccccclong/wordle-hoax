@@ -67,12 +67,28 @@ export class Game {
 
 function computeMatch(guessWord: string, answerWord: string): string {
   const guessChars = guessWord.split('');
-  const matchChars = guessChars.map((guessChar, guessIndex) => {
-    const answerIndex = answerWord.indexOf(guessChar);
-    if (answerIndex === -1) return '_';
-    if (answerIndex === guessIndex) return 'X';
-    return '?';
-  });
+  const answerChars = answerWord.split('');
+  const matchChars = ['_', '_', '_', '_', '_'];
+
+  for (let guessIndex = 0; guessIndex < guessChars.length; guessIndex++) {
+    const guessChar = guessChars[guessIndex];
+    const answerChar = answerChars[guessIndex];
+    if (guessChar === answerChar) {
+      matchChars[guessIndex] = 'X';
+      answerChars[guessIndex] = '';
+    }
+  }
+
+  for (let guessIndex = 0; guessIndex < guessChars.length; guessIndex++) {
+    if (matchChars[guessIndex] !== '_') continue;
+    const guessChar = guessChars[guessIndex];
+    const answerIndex = answerChars.indexOf(guessChar);
+    if (answerIndex !== -1) {
+      matchChars[guessIndex] = '?';
+      answerChars[answerIndex] = '';
+    }
+  }
+
   return matchChars.join('');
 }
 
