@@ -1,4 +1,5 @@
-import { getOccurences } from './utils';
+import { NoWordsError, WordFormatError } from './game.errors';
+import { getOccurences, isAllAlphabet } from './utils';
 
 export class Game {
   private numRounds = 0;
@@ -7,6 +8,7 @@ export class Game {
   private possibleWords: string[];
 
   constructor(words: string[]) {
+    validateWords(words);
     this.words = words.map((word) => word.toUpperCase());
     this.possibleWords = this.words;
   }
@@ -65,6 +67,16 @@ export class Game {
 
   private getCorrectWord(): string {
     return this.possibleWords[0];
+  }
+}
+
+function validateWords(words: string[]) {
+  if (words.length === 0) throw new NoWordsError();
+  for (const word of words) {
+    if (word.length !== 5)
+      throw new WordFormatError(word, 'Must be consisted of 5 characters');
+    if (!isAllAlphabet(word))
+      throw new WordFormatError(word, 'Must be alphabetic characters only');
   }
 }
 
