@@ -8,7 +8,7 @@ describe(Game.name, () => {
   });
 
   describe.each([[['12345']], [['!@#$%']], [['ABCD ']], [['     ']]])(
-    'when there are words that have 5 non-letter characters',
+    'when there are words that have 5 non-letter characters - case %#',
     (words) => {
       it('throw WordFormatError', () =>
         expect(() => new Game(words)).toThrow(WordFormatError));
@@ -16,7 +16,7 @@ describe(Game.name, () => {
   );
 
   describe.each([[['']], [['ABCD']], [['ABCDEF']]])(
-    'when there are words that are not consisted of 5 characters',
+    'when there are words that are not consisted of 5 characters - case %#',
     (words) => {
       it('throw WordFormatError', () =>
         expect(() => new Game(words)).toThrow(WordFormatError));
